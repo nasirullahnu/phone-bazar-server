@@ -12,12 +12,20 @@ app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.w5uqgn7.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri)
+// console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run(){
     try{
-        
+        const allUsersCollections = client.db('phoneBazar').collection('allUsers');
+
+        // post and set user information to database 
+        app.post('/allUsers', async (req, res)=>{
+            const user = req.body
+            console.log(user);
+            const result = await allUsersCollections.insertOne(user);
+            res.send(result);
+        })
     }
     finally{
 
