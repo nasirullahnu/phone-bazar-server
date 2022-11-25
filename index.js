@@ -72,6 +72,18 @@ async function run(){
         })
 
 
+        // get my products from database 
+        app.get('/products',  async (req, res) => {
+            const email = req.query.email
+            console.log(email)
+            const query = {
+                sellerMail : email
+            }
+            const result = await productsCollections.find(query).toArray();
+            res.send(result)
+        })
+
+
 
         // update json data 
         // app.get('/description', async (req, res) => {
