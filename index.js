@@ -54,7 +54,7 @@ async function run(){
         
 
 
-        // post buyers purchase bookings to database 
+        // post buyers bookings to database 
         app.post('/bookings', async (req, res)=> {
             const booking = req.body;
             console.log(booking)
@@ -63,6 +63,13 @@ async function run(){
         })
 
 
+
+        // add products to database api 
+        app.post('/products', async(req, res)=> {
+            const products = req.body
+            const result = await productsCollections.insertOne(products);
+            res.send(result)
+        })
 
 
 
