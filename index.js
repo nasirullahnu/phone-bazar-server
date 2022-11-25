@@ -20,6 +20,7 @@ async function run(){
         const allUsersCollections = client.db('phoneBazar').collection('allUsers');
         const categoriesCollections = client.db('phoneBazar').collection('categories');
         const productsCollections = client.db('phoneBazar').collection('products');
+        const bookingCollections = client.db('phoneBazar').collection('bookings');
 
         // post and set user information to database 
         app.post('/allUsers', async (req, res)=>{
@@ -34,6 +35,7 @@ async function run(){
             const result = await allUsersCollections.find(query).toArray();
             res.send(result);
         })
+
 
 
         // get categories from database 
@@ -51,13 +53,26 @@ async function run(){
         })
         
 
+
+        // post buyers purchase bookings to database 
+        app.post('/bookings', async (req, res)=> {
+            const booking = req.body;
+            console.log(booking)
+            const result = await bookingCollections.insertOne(booking);
+            res.send(result)
+        })
+
+
+
+
+
         // update json data 
-        // app.get('/condition', async (req, res) => {
+        // app.get('/description', async (req, res) => {
         //     const filter = {};
         //     const options = { upsert: true };
         //     const updateDoc = {
         //         $set: {
-        //             condition: "fresh"
+        //             description: "This is a very good phone. 10 Days of moneyback garranty"
         //         }
         //     }
         //     const result = await productsCollections.updateMany(filter, updateDoc, options)
