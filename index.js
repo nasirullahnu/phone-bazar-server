@@ -85,6 +85,19 @@ async function run(){
 
 
 
+        // get my orders from database 
+        app.get('/bookings',  async (req, res) => {
+            const email = req.query.email
+            console.log(email)
+            const query = {
+                email : email
+            }
+            const result = await bookingCollections.find(query).toArray();
+            res.send(result)
+        })
+
+
+
         // update json data 
         // app.get('/description', async (req, res) => {
         //     const filter = {};
