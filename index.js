@@ -61,36 +61,6 @@ async function run(){
             const result = await bookingCollections.insertOne(booking);
             res.send(result)
         })
-
-
-
-        // add products to database api 
-        app.post('/products', async(req, res)=> {
-            const products = req.body
-            console.log(products)
-            const result = await productsCollections.insertOne(products);
-            res.send(result)
-        })
-
-        // get user specific products from database 
-        app.get('/products',  async (req, res) => {
-            const email = req.query.email
-            console.log(email)
-            const query = {
-                sellerMail : email
-            }
-            const result = await productsCollections.find(query).toArray();
-            res.send(result)
-        })
-
-        // delete products from database 
-        app.delete('/products/:id', async (req, res)=> {
-            const id = req.params.id
-            const filter = {_id : ObjectId(id)}
-            const result = await productsCollections.deleteOne(filter);
-            res.send(result);
-        })
-
         // get my orders from database 
         app.get('/bookings',  async (req, res) => {
             const email = req.query.email
@@ -101,6 +71,46 @@ async function run(){
             const result = await bookingCollections.find(query).toArray();
             res.send(result)
         })
+        // delete buyer orders from database 
+        app.delete('/bookings/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const result = await bookingCollections.deleteOne(filter);
+            res.send(result);
+        })
+
+
+
+        // add products to database api 
+        app.post('/products', async(req, res)=> {
+            const products = req.body
+            console.log(products)
+            const result = await productsCollections.insertOne(products);
+            res.send(result)
+        })
+        // get user specific products from database 
+        app.get('/products',  async (req, res) => {
+            const email = req.query.email
+            console.log(email)
+            const query = {
+                sellerMail : email
+            }
+            const result = await productsCollections.find(query).toArray();
+            res.send(result)
+        })
+        // delete products from database 
+        app.delete('/products/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const result = await productsCollections.deleteOne(filter);
+            res.send(result);
+        })
+
+
+
+
+        
+        
 
 
 
