@@ -21,6 +21,7 @@ async function run(){
         const categoriesCollections = client.db('phoneBazar').collection('categories');
         const productsCollections = client.db('phoneBazar').collection('products');
         const bookingCollections = client.db('phoneBazar').collection('bookings');
+        const reviewCollections = client.db('phoneBazar').collection('reviews');
 
         // post and set user information to database 
         app.post('/allUsers', async (req, res)=>{
@@ -107,10 +108,13 @@ async function run(){
         })
 
 
-
-
-        
-        
+        // add review to database api is create 
+        app.post('/reviews', async (req, res)=> {
+            const review = req.body;
+            console.log(review)
+            const result = await reviewCollections.insertOne(review);
+            res.send(result)
+        })
 
 
 
