@@ -30,12 +30,36 @@ async function run(){
             const result = await allUsersCollections.insertOne(user);
             res.send(result);
         })
-        // get all users from database
-        app.get('/allUsers', async (req, res)=>{
-            const query = {}
+        // get all sellers from database
+        app.get('/sellers', async (req, res)=>{
+            const role = req.query.role
+            const query = {role : role}
             const result = await allUsersCollections.find(query).toArray();
             res.send(result);
         })
+        // delete sellers from database 
+        app.delete('/sellers/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const result = await allUsersCollections.deleteOne(filter);
+            res.send(result);
+        })
+        // get all buyers from database
+        app.get('/buyers', async (req, res)=>{
+            const role = req.query.role
+            const query = {role : role}
+            const result = await allUsersCollections.find(query).toArray();
+            res.send(result);
+        })
+        // delete sellers from database 
+        app.delete('/buyers/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const result = await allUsersCollections.deleteOne(filter);
+            res.send(result);
+        })
+
+
 
 
 
@@ -53,6 +77,8 @@ async function run(){
             res.send(result);
         })
         
+
+
 
 
         // post buyers bookings to database 
@@ -82,6 +108,9 @@ async function run(){
 
 
 
+
+
+
         // add products to database api 
         app.post('/products', async(req, res)=> {
             const products = req.body
@@ -108,6 +137,9 @@ async function run(){
         })
 
 
+
+
+
         // add review to database api is create 
         app.post('/reviews', async (req, res)=> {
             const review = req.body;
@@ -117,6 +149,8 @@ async function run(){
         })
 
 
+
+        
 
         // update json data 
         // app.get('/description', async (req, res) => {
