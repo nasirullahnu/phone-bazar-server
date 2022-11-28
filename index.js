@@ -49,6 +49,22 @@ async function run(){
             const result = await allUsersCollections.insertOne(user);
             res.send(result);
         })
+
+        app.put('/allUsers/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const option = {upsert : true};
+            const updatedDoc = {
+                        $set : {
+                            status : 'verified'
+                        }
+                    }
+                    const result = await allUsersCollections.updateOne(filter, updatedDoc, option)
+            res.send(result);
+        })
+
+    
+
         // get all sellers from database
         app.get('/sellers', async (req, res)=>{
             const role = req.query.role
@@ -63,6 +79,9 @@ async function run(){
             const result = await allUsersCollections.deleteOne(filter);
             res.send(result);
         })
+        
+
+
         // get all buyers from database
         app.get('/buyers', async (req, res)=>{
             const role = req.query.role
@@ -77,6 +96,8 @@ async function run(){
             const result = await allUsersCollections.deleteOne(filter);
             res.send(result);
         })
+
+
 
 
         // issue json web token 
