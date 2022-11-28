@@ -50,7 +50,16 @@ async function run(){
             res.send(result);
         })
 
-        app.put('/allUsers/:id', async (req, res)=> {
+        // make admin api is created 
+        app.put('/allUsers/:id', verifyJWT,  async (req, res)=> {
+            const decodedEmail = req.decoded.email
+            const query = {email : decodedEmail}
+            const user = await allUsersCollections.findOne(query)
+
+            if(user?.identity !== 'admin'){
+                return res.status(403).send({message : 'forbidden access'})
+            }
+
             const id = req.params.id
             const filter = {_id : ObjectId(id)}
             const option = {upsert : true};
