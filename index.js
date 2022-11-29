@@ -242,6 +242,19 @@ async function run(){
             const result = await reportCollections.insertOne(report)
             res.send(result);
         })
+        // get reports from database 
+        app.get('/reports', async (req, res)=> {
+            const query = {};
+            const result = await reportCollections.find(query).toArray();
+            res.send(result)
+        })
+        // delete reports from database 
+        app.delete('/reports/:id', async (req, res)=> {
+            const id = req.params.id
+            const filter = {_id : ObjectId(id)}
+            const result = await reportCollections.deleteOne(filter);
+            res.send(result);
+        })
 
 
 
