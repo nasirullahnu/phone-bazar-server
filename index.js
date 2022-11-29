@@ -72,6 +72,14 @@ async function run(){
             res.send(result);
         })
 
+        // identify admin api
+        app.get('/allUsers/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = {email};
+            const user = await allUsersCollections.findOne(query);
+            res.send({isAdmin : user?.role === 'admin'})
+        })
+
     
 
         // get all sellers from database
