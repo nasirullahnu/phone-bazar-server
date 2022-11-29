@@ -80,7 +80,13 @@ async function run(){
             res.send({isAdmin : user?.identity === 'admin'})
         })
 
-    
+        // identify taht user is seller or not 
+        app.get('/sellers/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = {email};
+            const user = await allUsersCollections.findOne(query);
+            res.send({isSeller : user?.role === 'seller'})
+        })
 
         // get all sellers from database
         app.get('/sellers', async (req, res)=>{
