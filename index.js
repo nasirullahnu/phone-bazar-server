@@ -72,12 +72,12 @@ async function run(){
             res.send(result);
         })
 
-        // identify admin api
+        // identify that user is admin or not an admin api for conditional rendering
         app.get('/allUsers/:email', async (req, res) => {
             const email = req.params.email;
             const query = {email};
             const user = await allUsersCollections.findOne(query);
-            res.send({isAdmin : user?.role === 'admin'})
+            res.send({isAdmin : user?.identity === 'admin'})
         })
 
     
