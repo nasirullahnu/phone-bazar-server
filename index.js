@@ -41,6 +41,7 @@ async function run(){
         const productsCollections = client.db('phoneBazar').collection('products');
         const bookingCollections = client.db('phoneBazar').collection('bookings');
         const reviewCollections = client.db('phoneBazar').collection('reviews');
+        const reportCollections = client.db('phoneBazar').collection('reports');
 
         // post and set user information to database 
         app.post('/allUsers', async (req, res)=>{
@@ -72,6 +73,9 @@ async function run(){
             res.send(result);
         })
 
+
+
+
         // identify that user is admin or not an admin api for conditional rendering
         app.get('/allUsers/:email', async (req, res) => {
             const email = req.params.email;
@@ -79,7 +83,6 @@ async function run(){
             const user = await allUsersCollections.findOne(query);
             res.send({isAdmin : user?.identity === 'admin'})
         })
-
         // identify taht user is seller or not 
         app.get('/sellers/:email', async (req, res) => {
             const email = req.params.email;
@@ -88,6 +91,9 @@ async function run(){
             res.send({isSeller : user?.role === 'seller'})
         })
 
+
+
+
         // get all sellers from database
         app.get('/sellers', async (req, res)=>{
             const role = req.query.role
@@ -95,6 +101,7 @@ async function run(){
             const result = await allUsersCollections.find(query).toArray();
             res.send(result);
         })
+
         // delete sellers from database 
         app.delete('/sellers/:id', async (req, res)=> {
             const id = req.params.id
@@ -226,6 +233,17 @@ async function run(){
             const result = await reviewCollections.insertOne(review);
             res.send(result)
         })
+
+
+        // post reviews to database 
+        app.post('/reports', async (req, res)=> {
+            const report = req.body;
+            console.log(report)
+            const result = await reportCollections.insertOne(report)
+            res.send(result);
+        })
+
+
 
 
 
